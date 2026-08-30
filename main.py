@@ -1,5 +1,4 @@
 # chatbot.py
-from datetime import datetime
 from funcao import *
 
 print("ADA iniciando....")
@@ -29,6 +28,17 @@ while True:
         print("\nADA: O meu nome é ADA.")
         print("ADA: ADA significa Assistente Digital Autónoma.")
         print("ADA: Estou em desenvolvimento e vou aprender novas funcionalidades ao longo do tempo.\n")
+
+    elif mensagem in ["faça uma conta", "faça um cálculo", "faça uma operação matemática", "faça uma operação aritmética", "calcule", "calcule uma operação matemática", "calcule uma operação aritmética"]:
+
+        a = input("\nADA: Digite o primeiro número: ")
+
+        operador = input("\nADA: Digite o operador (+, -, *, /): ")
+
+        b = input("\nADA: Digite o segundo número: ")
+
+        print(f"ADA: {calcular(a, operador, b)}")
+
 
     else:
         print("\nADA: Não entendi a pergunta.\n")

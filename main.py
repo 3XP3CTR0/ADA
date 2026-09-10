@@ -1,9 +1,20 @@
+import re
 from funcao import *
-
 
 def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
+
+        # Verificar se a mensagem é uma operação matemática
+    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem
+    )
+
+    if calculo:
+        numero1 = calculo.group(1)
+        operador = calculo.group(2)
+        numero2 = calculo.group(3)
+
+        return calcular(numero1, operador, numero2)
 
     if mensagem == "sair":
         return "Até logo!"

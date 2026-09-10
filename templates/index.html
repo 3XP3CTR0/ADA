@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ADA - Assistente Digital Autónoma</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                🤖 ADA
+            </div>
+
+            <p class="subtitle">
+                Assistente Digital Autónoma
+            </p>
+
+            <button id="nova-conversa">
+                + Nova conversa
+            </button>
+
+            <div class="menu">
+
+                <button>💬 Chat</button>
+                <button>🧮 Calculadora</button>
+                <button>🕐 Hora</button>
+                <button>📅 Data</button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ÁREA PRINCIPAL -->
+
+        <main class="chat">
+
+            <!-- CABEÇALHO -->
+
+            <header class="chat-header">
+
+                <div class="ada-info">
+
+                    <div class="avatar">
+                        🤖
+                    </div>
+
+                    <div>
+                        <h2>ADA</h2>
+
+                        <span>
+                            ● Online
+                        </span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- MENSAGENS -->
+
+            <section id="mensagens" class="messages">
+
+                <div class="message ada-message">
+
+                    <div class="message-avatar">
+                        🤖
+                    </div>
+
+                    <div class="message-content">
+                        Olá! Eu sou a ADA.
+                        Como posso ajudar-te hoje?
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ÁREA DE ESCRITA -->
+
+            <div class="input-area">
+
+                <input
+                    type="text"
+                    id="mensagem"
+                    placeholder="Escreve uma mensagem..."
+                    autocomplete="off"
+                >
+
+                <button id="enviar">
+                    ➤
+                </button>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}">
+    </script>
+
+</body>
+
+</html>

@@ -1,44 +1,54 @@
-# chatbot.py
 from funcao import *
 
-print("ADA iniciando....")
-print("Olá! Eu sou a ADA. Como posso ajudar você hoje Danilo?")
-print("Digite 'sair' para terminar.\n")
 
-while True:
-    mensagem = input("Você: ").lower()
+def responder(mensagem):
+
+    mensagem = mensagem.lower().strip()
 
     if mensagem == "sair":
-        print("ADA: Até logo!")
-        break
+        return "Até logo!"
 
     elif mensagem in ["olá", "ola", "oi", "bom dia", "boa tarde", "boa noite"]:
-        print("\nADA: Olá! Como estás?\n")
+        return "Olá! Como estás?"
 
-    elif mensagem in ["estas bem?", "estás bem?", "tudo bem?", "tudo ótimo?", "tudo otimo?"]:
-        print("\nADA: Estou bem, obrigado!\n")
+    elif mensagem in [
+        "estas bem?",
+        "estás bem?",
+        "tudo bem?",
+        "tudo ótimo?",
+        "tudo otimo?"
+    ]:
+        return "Estou bem, obrigado!"
 
-    elif mensagem in ["que horas são", "que horas são agora", "me diga as horas", "me diga as horas agora"]:
-        print(dizer_hora())
+    elif mensagem in [
+        "que horas são",
+        "que horas são agora",
+        "me diga as horas",
+        "me diga as horas agora"
+    ]:
+        return dizer_hora()
 
-    elif mensagem in ["que dia é hoje", "qual é a data de hoje", "me diga a data de hoje"]:
-        print(dizer_data())
+    elif mensagem in [
+        "que dia é hoje",
+        "qual é a data de hoje",
+        "me diga a data de hoje"
+    ]:
+        return dizer_data()
 
-    elif mensagem in ["quem es", "quem és", "qual e o teu nome", "qual é o teu nome", "quem és tu", "quem é você"]:
-        print("\nADA: O meu nome é ADA.")
-        print("ADA: ADA significa Assistente Digital Autónoma.")
-        print("ADA: Estou em desenvolvimento e vou aprender novas funcionalidades ao longo do tempo.\n")
-
-    elif mensagem in ["faça uma conta", "faça um cálculo", "faça uma operação matemática", "faça uma operação aritmética", "calcule", "calcule uma operação matemática", "calcule uma operação aritmética"]:
-
-        a = input("\nADA: Digite o primeiro número: ")
-
-        operador = input("\nADA: Digite o operador (+, -, *, /): ")
-
-        b = input("\nADA: Digite o segundo número: ")
-
-        print(f"ADA: {calcular(a, operador, b)}")
-
+    elif mensagem in [
+        "quem es",
+        "quem és",
+        "qual e o teu nome",
+        "qual é o teu nome",
+        "quem és tu",
+        "quem é você"
+    ]:
+        return (
+            "O meu nome é ADA. "
+            "ADA significa Assistente Digital Autónoma. "
+            "Estou em desenvolvimento e vou aprender "
+            "novas funcionalidades ao longo do tempo."
+        )
 
     else:
-        print("\nADA: Não entendi a pergunta.\n")
+        return "Não entendi a pergunta."

@@ -2,9 +2,13 @@
 
 ## 📌 Sobre o projeto
 
-A **ADA (Assistente Digital Autónoma)** é um chatbot desenvolvido em Python com o objetivo de criar uma assistente digital capaz de interagir com o utilizador e executar diferentes funcionalidades.
+A **ADA (Assistente Digital Autónoma)** é um chatbot desenvolvido em **Python**, com uma interface web criada com **Flask, HTML, CSS e JavaScript**.
 
-O projeto está em desenvolvimento e novas funcionalidades serão adicionadas ao longo do tempo.
+O objetivo do projeto é desenvolver, de forma gradual, uma assistente digital capaz de conversar com o utilizador, realizar tarefas e guardar informações através de uma base de dados.
+
+O projeto também serve como forma de aprendizagem e prática de **Python, desenvolvimento web, bases de dados e Inteligência Artificial**.
+
+---
 
 ## ✨ Funcionalidades atuais
 
@@ -15,28 +19,72 @@ Atualmente, a ADA consegue:
 * 📅 Informar a data atual;
 * 🤖 Informar o seu nome e significado;
 * 🧮 Realizar operações matemáticas básicas;
-* 🌐 Funcionar através de uma interface web.
+* 🌐 Funcionar através de uma interface web;
+* 🗄️ Utilizar uma base de dados SQLite;
+* 💾 Guardar informações na memória;
+* 🔎 Consultar informações guardadas;
+* ✏️ Atualizar informações existentes;
+* 🗑️ Apagar informações da memória.
+
+### 🧠 Sistema de memória
+
+A ADA possui uma memória baseada em **SQLite**, permitindo guardar informações através de comandos como:
+
+```text
+guardar nome como Danilo
+```
+
+Consultar:
+
+```text
+qual é o nome
+```
+
+Atualizar:
+
+```text
+guardar nome como João
+```
+
+E apagar:
+
+```text
+apagar nome
+```
+
+A base de dados é armazenada no ficheiro:
+
+```text
+ada.db
+```
+
+---
 
 ## 🛠️ Tecnologias utilizadas
 
-* Python
-* Flask
-* HTML
-* CSS
-* JavaScript
-* Git
-* GitHub
-* Visual Studio Code
+* 🐍 Python
+* 🌐 Flask
+* 🗄️ SQLite
+* 🌎 HTML
+* 🎨 CSS
+* ⚡ JavaScript
+* 🔧 Git
+* 🐙 GitHub
+* 💻 Visual Studio Code
+
+---
 
 ## 📂 Estrutura do projeto
 
 ```text
 ADA/
+
 │
 ├── README.md
 ├── app.py
 ├── main.py
 ├── funcao.py
+├── ada.db
 │
 ├── templates/
 │   └── index.html
@@ -46,25 +94,46 @@ ADA/
     └── script.js
 ```
 
-### Descrição dos principais ficheiros
+### 📄 Descrição dos principais ficheiros
 
 **`app.py`**
-Responsável pelo servidor Flask e pela comunicação entre o website e o código Python.
+
+Responsável pelo servidor Flask e pela comunicação entre a interface web e o código Python.
 
 **`main.py`**
-Contém a lógica principal de conversação da ADA.
+
+Contém a lógica principal de conversação da ADA e determina como a assistente deve responder às mensagens do utilizador.
 
 **`funcao.py`**
-Contém funções utilizadas pela ADA, como hora, data e cálculos.
+
+Contém as funções utilizadas pela ADA, incluindo:
+
+* Hora;
+* Data;
+* Cálculos;
+* Ligação à base de dados;
+* Guardar informações;
+* Consultar informações;
+* Atualizar informações;
+* Apagar informações.
+
+**`ada.db`**
+
+Base de dados SQLite utilizada pelo sistema de memória da ADA.
 
 **`index.html`**
-Define a estrutura da interface web.
+
+Define a estrutura da interface web do chatbot.
 
 **`style.css`**
-Define o visual e o design da interface.
+
+Define o design e o estilo visual da interface.
 
 **`script.js`**
-Controla a interação do utilizador com o chatbot.
+
+Controla a interação entre o utilizador e a interface, enviando as mensagens para o servidor Flask e apresentando as respostas da ADA.
+
+---
 
 ## 🚀 Como executar o projeto
 
@@ -100,28 +169,81 @@ Aceda a:
 http://127.0.0.1:5000
 ```
 
+> A base de dados `ada.db` é criada automaticamente quando a aplicação é executada pela primeira vez.
+
+---
+
+## 🧠 Base de dados
+
+A ADA utiliza **SQLite** para armazenar a sua memória.
+
+A tabela principal utilizada atualmente é:
+
+```text
+memoria
+```
+
+Com os campos:
+
+| Campo   | Descrição             |
+| ------- | --------------------- |
+| `id`    | Identificador único   |
+| `chave` | Nome da informação    |
+| `valor` | Informação armazenada |
+
+Exemplo:
+
+| id | chave     | valor  |
+| -: | --------- | ------ |
+|  1 | nome      | Danilo |
+|  2 | linguagem | Python |
+
+O sistema também consegue atualizar uma informação existente em vez de criar vários registos iguais.
+
+---
+
 ## 🔮 Futuras funcionalidades
 
 Algumas funcionalidades planeadas para futuras versões:
 
 * 🧠 Melhor compreensão de linguagem natural;
-* 🧮 Cálculos através de linguagem natural;
+* 🗣️ Compreensão de diferentes formas de escrever a mesma frase;
 * 🌐 Pesquisas na Internet;
 * 📂 Abertura de ficheiros, pastas e aplicações;
-* 🗄️ Integração com uma base de dados;
 * 🎙️ Reconhecimento de voz;
 * 🔊 Respostas por voz;
-* 💾 Sistema de memória;
-* 🤖 Integração com modelos de Inteligência Artificial.
+* 🧠 Sistema de memória mais avançado;
+* 💬 Histórico das conversas;
+* 🤖 Integração com modelos de Inteligência Artificial;
+* 🧠 Processamento de linguagem natural mais avançado;
+* 🔐 Sistema de utilizadores e autenticação;
+* 📊 Interface para visualizar e gerir a memória da ADA.
+
+---
 
 ## 📌 Estado do projeto
 
 🚧 **Em desenvolvimento**
 
-A ADA é um projeto de aprendizagem e desenvolvimento contínuo, sendo utilizada para praticar programação em Python, desenvolvimento web, integração entre frontend e backend e futuras funcionalidades relacionadas com Inteligência Artificial.
+A ADA é um projeto de aprendizagem e desenvolvimento contínuo.
+
+O projeto está a ser utilizado para praticar e aprofundar conhecimentos em:
+
+* Programação em Python;
+* Desenvolvimento web;
+* Flask;
+* JavaScript;
+* Bases de dados e SQL;
+* Integração entre frontend e backend;
+* Estruturação de projetos;
+* Inteligência Artificial.
+
+Novas funcionalidades serão adicionadas progressivamente.
+
+---
 
 ## 👨‍💻 Autor
 
 **Danilo Alex Alves Lopes**
 
-GitHub: `3XP3CTR0`
+GitHub: **3XP3CTR0**

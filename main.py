@@ -6,8 +6,31 @@ def responder(mensagem):
     mensagem = mensagem.lower().strip()
 
         # Verificar se a mensagem é uma operação matemática
-    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem
-    )
+    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
+
+    if calculo:
+        numero1 = calculo.group(1)
+        operador = calculo.group(2)
+        numero2 = calculo.group(3)
+
+        return calcular(numero1, operador, numero2)
+
+        # Detectar cálculos escritos por extenso
+    mensagem = mensagem.replace("quanto é", "")
+    mensagem = mensagem.replace("quanto e", "")
+    mensagem = mensagem.replace("calcula", "")
+    mensagem = mensagem.replace("calcule", "")
+
+    mensagem = mensagem.replace("mais", "+")
+    mensagem = mensagem.replace("menos", "-")
+    mensagem = mensagem.replace("vezes", "*")
+    mensagem = mensagem.replace("multiplicado por", "*")
+    mensagem = mensagem.replace("dividido por", "/")
+
+    mensagem = mensagem.replace("?", "")
+    mensagem = mensagem.strip()
+
+    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
 
     if calculo:
         numero1 = calculo.group(1)
@@ -61,5 +84,40 @@ def responder(mensagem):
             "novas funcionalidades ao longo do tempo."
         )
 
+    elif mensagem.startswith("guardar "):
+        dados = mensagem.replace("guardar ", "", 1)
+
+        if " como " in dados:
+            chave, valor = dados.split(" como ", 1)
+
+            chave = chave.strip()
+            valor = valor.strip()
+
+            guardar_memoria(chave, valor)
+
+            return f"Guardei que {chave} é {valor}."
+
+        return "Para guardar uma informação, escreva por exemplo: guardar nome como Danilo."
+
+    elif mensagem.startswith("qual é "):
+        chave = mensagem.replace("qual é ", "", 1).strip()
+
+        valor = buscar_memoria(chave)
+
+        if valor:
+            return f"O {chave} é {valor}."
+
+        return f"Não tenho nenhuma informação guardada sobre {chave}."
+
+    elif mensagem.startswith("apagar "):
+        chave = mensagem.replace("apagar ", "", 1).strip()
+
+        if apagar_memoria(chave):
+            return f"Apaguei a informação sobre {chave}."
+
+        return f"Não encontrei nenhuma informação sobre {chave}."
+
     else:
         return "Não entendi a pergunta."
+
+criar_bd()  # Chama a função para criar o banco de dados ao iniciar o programa

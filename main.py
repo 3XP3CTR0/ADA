@@ -117,7 +117,50 @@ def responder(mensagem):
 
         return f"Não encontrei nenhuma informação sobre {chave}."
 
+    elif mensagem.startswith("pesquisar "):
+
+        pergunta = mensagem.replace(
+            "pesquisar ",
+            "",
+            1
+        ).strip()
+
+        if pergunta == "":
+            return "O que queres que eu pesquise?"
+
+        return pesquisar_internet(pergunta)
+
+
+    elif mensagem.startswith("pesquisa "):
+
+        pergunta = mensagem.replace(
+            "pesquisa ",
+            "",
+            1
+        ).strip()
+
+        if pergunta == "":
+            return "O que queres que eu pesquise?"
+
+        return pesquisar_internet(pergunta)
+
+
+    elif mensagem.startswith("procura "):
+
+        pergunta = mensagem.replace(
+            "procura ",
+            "",
+            1
+        ).strip()
+
+        if pergunta == "":
+            return "O que queres que eu pesquise?"
+
+        return pesquisar_internet(pergunta)
+
+
     else:
         return "Não entendi a pergunta."
+
 
 criar_bd()  # Chama a função para criar o banco de dados ao iniciar o programa

@@ -162,5 +162,3 @@ def responder(mensagem):
     else:
         return "Não entendi a pergunta."
 
-
-criar_bd()  # Chama a função para criar o banco de dados ao iniciar o programa

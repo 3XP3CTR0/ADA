@@ -2,6 +2,7 @@
 <html lang="pt">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -11,43 +12,81 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
     <div class="app">
 
-        <!-- MENU LATERAL -->
+
+        <!-- =========================================
+             MENU LATERAL
+        ========================================== -->
 
         <aside class="sidebar">
+
 
             <div class="logo">
                 🤖 ADA
             </div>
 
+
             <p class="subtitle">
                 Assistente Digital Autónoma
             </p>
+
 
             <button id="nova-conversa">
                 + Nova conversa
             </button>
 
+
             <div class="menu">
 
                 <button>💬 Chat</button>
+
                 <button>🧮 Calculadora</button>
+
                 <button>🕐 Hora</button>
+
                 <button>📅 Data</button>
 
             </div>
 
+
+            <!-- LISTA DE CONVERSAS -->
+
+            <div class="conversas-container">
+
+                <h3>
+                    Conversas
+                </h3>
+
+
+                <div id="lista-conversas">
+
+                    <!--
+                    As conversas serão
+                    adicionadas pelo JavaScript.
+                    -->
+
+                </div>
+
+            </div>
+
+
         </aside>
 
 
-        <!-- ÁREA PRINCIPAL -->
+
+        <!-- =========================================
+             ÁREA PRINCIPAL
+        ========================================== -->
 
         <main class="chat">
+
 
             <!-- CABEÇALHO -->
 
@@ -55,26 +94,38 @@
 
                 <div class="ada-info">
 
+
                     <div class="avatar">
                         🤖
                     </div>
 
+
                     <div>
-                        <h2>ADA</h2>
+
+                        <h2>
+                            ADA
+                        </h2>
+
 
                         <span>
                             ● Online
                         </span>
+
                     </div>
+
 
                 </div>
 
             </header>
 
 
+
             <!-- MENSAGENS -->
 
-            <section id="mensagens" class="messages">
+            <section
+                id="mensagens"
+                class="messages"
+            >
 
                 <div class="message ada-message">
 
@@ -82,9 +133,12 @@
                         🤖
                     </div>
 
+
                     <div class="message-content">
+
                         Olá! Eu sou a ADA.
                         Como posso ajudar-te hoje?
+
                     </div>
 
                 </div>
@@ -92,9 +146,11 @@
             </section>
 
 
+
             <!-- ÁREA DE ESCRITA -->
 
             <div class="input-area">
+
 
                 <input
                     type="text"
@@ -103,19 +159,25 @@
                     autocomplete="off"
                 >
 
+
                 <button id="enviar">
                     ➤
                 </button>
 
+
             </div>
 
+
         </main>
+
 
     </div>
 
 
-    <script src="{{ url_for('static', filename='script.js') }}">
+    <script
+        src="{{ url_for('static', filename='script.js') }}">
     </script>
+
 
 </body>
 

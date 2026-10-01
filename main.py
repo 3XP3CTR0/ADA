@@ -42,8 +42,23 @@ def responder(mensagem):
     if mensagem == "sair":
         return "Até logo!"
 
-    elif mensagem in ["olá", "ola", "oi", "bom dia", "boa tarde", "boa noite"]:
-        return "Olá! Como estás?"
+    elif mensagem in [
+        "olá",
+        "ola",
+        "oi",
+        "oie",
+        "hey",
+        "hello",
+        "hi",
+        "bom dia",
+        "boa tarde",
+        "boa noite",
+        "e aí",
+        "e ai",
+        "tudo bem",
+        "tudo bom"
+    ]:
+        return "Olá! 👋 Como estás?"
 
     elif mensagem in [
         "estas bem?",
@@ -54,28 +69,45 @@ def responder(mensagem):
     ]:
         return "Estou bem, obrigado!"
 
-    elif mensagem in [
-        "que horas são",
-        "que horas são agora",
-        "me diga as horas",
-        "me diga as horas agora"
-    ]:
+    elif any(palavra in mensagem for palavra in [
+        "hora",
+        "horas",
+        "que horas",
+        "diz-me as horas",
+        "diga-me as horas",
+        "sabes que horas",
+        "qual é a hora",
+        "qual a hora"
+    ]):
         return dizer_hora()
 
-    elif mensagem in [
+    elif any(frase in mensagem for frase in [
         "que dia é hoje",
-        "qual é a data de hoje",
-        "me diga a data de hoje"
-    ]:
+        "qual é a data",
+        "qual a data",
+        "data de hoje",
+        "diz-me a data",
+        "diga-me a data",
+        "que dia estamos",
+        "em que dia estamos"
+    ]):
         return dizer_data()
 
     elif mensagem in [
         "quem es",
         "quem és",
+        "quem és tu",
+        "quem e voce",
+        "quem é você",
         "qual e o teu nome",
         "qual é o teu nome",
-        "quem és tu",
-        "quem é você"
+        "como te chamas",
+        "como você se chama",
+        "qual é o teu nome?",
+        "qual e o teu nome?",
+        "o que é a ada",
+        "o que e a ada",
+        "o que significa ada"
     ]:
         return (
             "O meu nome é ADA. "
@@ -85,19 +117,67 @@ def responder(mensagem):
         )
 
     elif mensagem.startswith("guardar "):
-        dados = mensagem.replace("guardar ", "", 1)
+
+        dados = mensagem.replace(
+            "guardar ",
+            "",
+            1
+        ).strip()
 
         if " como " in dados:
-            chave, valor = dados.split(" como ", 1)
+
+            chave, valor = dados.split(
+                " como ",
+                1
+            )
 
             chave = chave.strip()
             valor = valor.strip()
 
-            guardar_memoria(chave, valor)
+            guardar_memoria(
+                chave,
+                valor
+            )
 
             return f"Guardei que {chave} é {valor}."
 
-        return "Para guardar uma informação, escreva por exemplo: guardar nome como Danilo."
+        return (
+            "Para guardar uma informação, "
+            "escreve por exemplo: "
+            "guardar nome como Danilo."
+        )
+
+
+    elif mensagem.startswith("lembra-te que "):
+
+        dados = mensagem.replace(
+            "lembra-te que ",
+            "",
+            1
+        ).strip()
+
+
+        if " é " in dados:
+
+            chave, valor = dados.split(
+                " é ",
+                1
+            )
+
+            chave = chave.strip()
+            valor = valor.strip()
+
+            guardar_memoria(
+                chave,
+                valor
+            )
+
+            return f"Vou lembrar-me que {chave} é {valor}."
+
+        return (
+            "Diz-me o que queres que eu memorize. "
+            "Por exemplo: lembra-te que o meu nome é Danilo."
+        )
 
     elif mensagem.startswith("qual é "):
         chave = mensagem.replace("qual é ", "", 1).strip()

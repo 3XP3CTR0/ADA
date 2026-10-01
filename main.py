@@ -158,6 +158,39 @@ def responder(mensagem):
 
         return pesquisar_internet(pergunta)
 
+    elif mensagem in ["ajuda", "help", "o que podes fazer", "o que você pode fazer"]:
+        return """
+        🤖 Posso ajudar-te com:
+
+        💬 Conversação
+        - olá
+        - como estás?
+        - quem és?
+
+        🧮 Calculadora
+        - 10 + 5
+        - 20 * 4
+        - quanto é 50 dividido por 2?
+
+        🕐 Hora e Data
+        - que horas são?
+        - que dia é hoje?
+
+        🧠 Memória
+        - guardar nome como Danilo
+        - qual é nome
+        - apagar nome
+
+        🌐 Internet
+        - pesquisar Python
+        - pesquisar notícias sobre tecnologia
+        - procura informações sobre Flask
+
+        💾 Conversas
+        - As conversas são guardadas automaticamente.
+
+        💡 Experimenta escrever uma das opções acima!
+        """
 
     else:
         return "Não entendi a pergunta."

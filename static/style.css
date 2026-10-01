@@ -1,25 +1,88 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+/* ==========================================
+   CORES DO TEMA
+========================================== */
+
+:root {
+
+    --fundo: #0f172a;
+    --sidebar: #111827;
+    --elemento: #1e293b;
+    --borda: #273244;
+    --texto: white;
+    --texto-secundario: #94a3b8;
+
+    --principal: #2563eb;
+    --principal-hover: #1d4ed8;
+
+    --elemento-hover: #334155;
+
 }
 
+
+/* ==========================================
+   MODO CLARO
+========================================== */
+
+body.claro {
+
+    --fundo: #f8fafc;
+    --sidebar: #ffffff;
+    --elemento: #e2e8f0;
+    --borda: #cbd5e1;
+    --texto: #0f172a;
+    --texto-secundario: #64748b;
+
+    --principal: #2563eb;
+    --principal-hover: #1d4ed8;
+
+    --elemento-hover: #cbd5e1;
+
+}
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ==========================================
+   BODY
+========================================== */
 
 body {
+
     font-family: Arial, sans-serif;
 
-    background: #0f172a;
+    background: var(--fundo);
 
-    color: white;
+    color: var(--texto);
 
     height: 100vh;
+
 }
 
 
+/* ==========================================
+   APP
+========================================== */
+
 .app {
+
     display: flex;
 
     height: 100vh;
+
 }
 
 
@@ -31,41 +94,50 @@ body {
 
     width: 270px;
 
-    background: #111827;
+    background: var(--sidebar);
 
     padding: 25px 20px;
 
-    border-right: 1px solid #273244;
+    border-right: 1px solid var(--borda);
 
     display: flex;
 
     flex-direction: column;
 
     overflow: hidden;
+
 }
 
+
+/* LOGO */
 
 .logo {
 
     font-size: 28px;
 
     font-weight: bold;
+
 }
 
 
+/* SUBTÍTULO */
+
 .subtitle {
 
-    color: #94a3b8;
+    color: var(--texto-secundario);
 
     font-size: 13px;
 
     margin-top: 5px;
 
     margin-bottom: 30px;
+
 }
 
 
-/* BOTÕES DA SIDEBAR */
+/* ==========================================
+   BOTÕES DA SIDEBAR
+========================================== */
 
 .sidebar button {
 
@@ -79,37 +151,69 @@ body {
 
     border-radius: 10px;
 
-    background: #1e293b;
+    background: var(--elemento);
 
-    color: white;
+    color: var(--texto);
 
     cursor: pointer;
 
     text-align: left;
+
 }
 
 
 .sidebar button:hover {
 
-    background: #334155;
+    background: var(--elemento-hover);
+
 }
 
 
-/* NOVA CONVERSA */
+/* ==========================================
+   BOTÃO DO TEMA
+========================================== */
+
+.tema-toggle {
+
+    background: transparent !important;
+
+    border: 1px solid var(--borda) !important;
+
+    color: var(--texto) !important;
+
+    text-align: center !important;
+
+    margin-bottom: 15px !important;
+
+}
+
+
+.tema-toggle:hover {
+
+    background: var(--elemento) !important;
+
+}
+
+
+/* ==========================================
+   NOVA CONVERSA
+========================================== */
 
 #nova-conversa {
 
-    background: #2563eb;
+    background: var(--principal);
 
     text-align: center;
 
     font-weight: bold;
+
 }
 
 
 #nova-conversa:hover {
 
-    background: #1d4ed8;
+    background: var(--principal-hover);
+
 }
 
 
@@ -120,6 +224,7 @@ body {
 .menu {
 
     margin-top: 5px;
+
 }
 
 
@@ -136,12 +241,13 @@ body {
     min-height: 0;
 
     overflow-y: auto;
+
 }
 
 
 .conversas-container h3 {
 
-    color: #94a3b8;
+    color: var(--texto-secundario);
 
     font-size: 12px;
 
@@ -152,10 +258,13 @@ body {
     margin-bottom: 10px;
 
     padding-left: 5px;
+
 }
 
 
-/* CONVERSA */
+/* ==========================================
+   CONVERSA
+========================================== */
 
 .conversa-item {
 
@@ -166,10 +275,13 @@ body {
     gap: 5px;
 
     margin-bottom: 5px;
+
 }
 
 
-/* BOTÃO DA CONVERSA */
+/* ==========================================
+   BOTÃO DA CONVERSA
+========================================== */
 
 .conversa-btn {
 
@@ -181,7 +293,7 @@ body {
 
     background: transparent !important;
 
-    color: #cbd5e1 !important;
+    color: var(--texto-secundario) !important;
 
     white-space: nowrap;
 
@@ -190,28 +302,35 @@ body {
     text-overflow: ellipsis;
 
     font-size: 13px;
+
 }
 
 
 .conversa-btn:hover {
 
-    background: #1e293b !important;
+    background: var(--elemento) !important;
 
-    color: white !important;
+    color: var(--texto) !important;
+
 }
 
 
-/* CONVERSA ATIVA */
+/* ==========================================
+   CONVERSA ATIVA
+========================================== */
 
 .conversa-btn.ativa {
 
-    background: #1e293b !important;
+    background: var(--elemento) !important;
 
-    color: white !important;
+    color: var(--texto) !important;
+
 }
 
 
-/* BOTÃO APAGAR */
+/* ==========================================
+   BOTÃO APAGAR
+========================================== */
 
 .apagar-conversa {
 
@@ -227,7 +346,8 @@ body {
 
     background: transparent !important;
 
-    color: #94a3b8 !important;
+    color: var(--texto-secundario) !important;
+
 }
 
 
@@ -236,6 +356,7 @@ body {
     background: #7f1d1d !important;
 
     color: white !important;
+
 }
 
 
@@ -252,6 +373,7 @@ body {
     flex-direction: column;
 
     min-width: 0;
+
 }
 
 
@@ -265,11 +387,12 @@ body {
 
     padding: 15px 30px;
 
-    border-bottom: 1px solid #273244;
+    border-bottom: 1px solid var(--borda);
 
     display: flex;
 
     align-items: center;
+
 }
 
 
@@ -280,8 +403,13 @@ body {
     align-items: center;
 
     gap: 12px;
+
 }
 
+
+/* ==========================================
+   AVATAR
+========================================== */
 
 .avatar {
 
@@ -289,7 +417,7 @@ body {
 
     height: 45px;
 
-    background: #2563eb;
+    background: var(--principal);
 
     border-radius: 50%;
 
@@ -300,12 +428,14 @@ body {
     align-items: center;
 
     font-size: 23px;
+
 }
 
 
 .ada-info h2 {
 
     font-size: 18px;
+
 }
 
 
@@ -314,6 +444,7 @@ body {
     color: #22c55e;
 
     font-size: 12px;
+
 }
 
 
@@ -328,6 +459,7 @@ body {
     padding: 30px;
 
     overflow-y: auto;
+
 }
 
 
@@ -340,12 +472,14 @@ body {
     margin-bottom: 20px;
 
     max-width: 75%;
+
 }
 
 
 .ada-message {
 
     align-self: flex-start;
+
 }
 
 
@@ -354,8 +488,13 @@ body {
     margin-left: auto;
 
     flex-direction: row-reverse;
+
 }
 
+
+/* ==========================================
+   AVATAR DAS MENSAGENS
+========================================== */
 
 .message-avatar {
 
@@ -365,7 +504,7 @@ body {
 
     min-width: 38px;
 
-    background: #2563eb;
+    background: var(--principal);
 
     border-radius: 50%;
 
@@ -374,18 +513,24 @@ body {
     justify-content: center;
 
     align-items: center;
+
 }
 
 
 .user-message .message-avatar {
 
     background: #475569;
+
 }
 
 
+/* ==========================================
+   CONTEÚDO DA MENSAGEM
+========================================== */
+
 .message-content {
 
-    background: #1e293b;
+    background: var(--elemento);
 
     padding: 12px 16px;
 
@@ -394,12 +539,14 @@ body {
     line-height: 1.5;
 
     white-space: pre-wrap;
+
 }
 
 
 .user-message .message-content {
 
-    background: #2563eb;
+    background: var(--principal);
+
 }
 
 
@@ -415,7 +562,8 @@ body {
 
     gap: 10px;
 
-    border-top: 1px solid #273244;
+    border-top: 1px solid var(--borda);
+
 }
 
 
@@ -425,25 +573,38 @@ body {
 
     padding: 15px;
 
-    border: 1px solid #334155;
+    border: 1px solid var(--borda);
 
     border-radius: 12px;
 
-    background: #1e293b;
+    background: var(--elemento);
 
-    color: white;
+    color: var(--texto);
 
     outline: none;
 
     font-size: 15px;
+
+}
+
+
+.input-area input::placeholder {
+
+    color: var(--texto-secundario);
+
 }
 
 
 .input-area input:focus {
 
-    border-color: #2563eb;
+    border-color: var(--principal);
+
 }
 
+
+/* ==========================================
+   BOTÃO ENVIAR
+========================================== */
 
 .input-area button {
 
@@ -453,19 +614,21 @@ body {
 
     border-radius: 12px;
 
-    background: #2563eb;
+    background: var(--principal);
 
     color: white;
 
     font-size: 20px;
 
     cursor: pointer;
+
 }
 
 
 .input-area button:hover {
 
-    background: #1d4ed8;
+    background: var(--principal-hover);
+
 }
 
 
@@ -478,24 +641,28 @@ body {
     .sidebar {
 
         display: none;
+
     }
 
 
     .messages {
 
         padding: 20px 15px;
+
     }
 
 
     .input-area {
 
         padding: 15px;
+
     }
 
 
     .message {
 
         max-width: 90%;
+
     }
 
 }

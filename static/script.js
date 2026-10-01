@@ -11,9 +11,103 @@ const listaConversas =
     document.getElementById("lista-conversas");
 
 
+// ==========================================================
+// BOTÃO DO TEMA
+// ==========================================================
+
+const temaToggle =
+    document.getElementById("tema-toggle");
+
+
 // ID da conversa que está aberta neste momento
 
 let conversaAtual = null;
+
+
+// ==========================================================
+// TEMA CLARO / ESCURO
+// ==========================================================
+
+function atualizarBotaoTema() {
+
+    if (!temaToggle) {
+        return;
+    }
+
+    if (
+        document.body.classList.contains("claro")
+    ) {
+
+        temaToggle.textContent =
+            "☀️ Modo claro";
+
+    } else {
+
+        temaToggle.textContent =
+            "🌙 Modo escuro";
+
+    }
+}
+
+
+function carregarTema() {
+
+    const tema =
+        localStorage.getItem("tema");
+
+    if (tema === "claro") {
+
+        document.body.classList.add("claro");
+
+    } else {
+
+        document.body.classList.remove("claro");
+
+    }
+
+    atualizarBotaoTema();
+}
+
+
+function alternarTema() {
+
+    document.body.classList.toggle("claro");
+
+    if (
+        document.body.classList.contains("claro")
+    ) {
+
+        localStorage.setItem(
+            "tema",
+            "claro"
+        );
+
+    } else {
+
+        localStorage.setItem(
+            "tema",
+            "escuro"
+        );
+
+    }
+
+    atualizarBotaoTema();
+}
+
+
+if (temaToggle) {
+
+    temaToggle.addEventListener(
+        "click",
+        alternarTema
+    );
+
+}
+
+
+// Carregar o tema guardado
+
+carregarTema();
 
 
 // ==========================================================
@@ -160,6 +254,7 @@ async function carregarConversas() {
             "Erro ao carregar conversas:",
             erro
         );
+
     }
 }
 
@@ -205,6 +300,7 @@ function adicionarConversaNaLista(conversa) {
         botao.classList.add(
             "ativa"
         );
+
     }
 
 
@@ -243,6 +339,7 @@ function adicionarConversaNaLista(conversa) {
         function(event) {
 
             event.stopPropagation();
+
 
             apagarConversa(
                 conversa.id
@@ -290,13 +387,13 @@ async function criarNovaConversa() {
 
         await carregarConversas();
 
-
     } catch (erro) {
 
         console.error(
             "Erro ao criar conversa:",
             erro
         );
+
     }
 }
 
@@ -353,6 +450,7 @@ async function carregarConversa(id) {
 
                 }
             );
+
         }
 
 
@@ -367,6 +465,7 @@ async function carregarConversa(id) {
             "Erro ao carregar conversa:",
             erro
         );
+
     }
 }
 
@@ -406,6 +505,7 @@ async function carregarListaSemAbrir() {
             "Erro ao atualizar lista:",
             erro
         );
+
     }
 }
 
@@ -421,7 +521,9 @@ async function enviarMensagem() {
 
 
     if (texto === "") {
+
         return;
+
     }
 
 
@@ -432,6 +534,7 @@ async function enviarMensagem() {
     if (conversaAtual === null) {
 
         await criarNovaConversa();
+
     }
 
 
@@ -506,7 +609,9 @@ async function enviarMensagem() {
 
         );
 
+
         console.error(erro);
+
     }
 }
 
@@ -524,7 +629,9 @@ async function apagarConversa(id) {
 
 
     if (!confirmar) {
+
         return;
+
     }
 
 
@@ -561,6 +668,7 @@ async function apagarConversa(id) {
             "Erro ao apagar conversa:",
             erro
         );
+
     }
 }
 

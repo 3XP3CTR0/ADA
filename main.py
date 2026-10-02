@@ -6,7 +6,7 @@ def responder(mensagem):
     mensagem = mensagem.lower().strip()
 
         # Verificar se a mensagem é uma operação matemática
-    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
+    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/^])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
 
     if calculo:
         numero1 = calculo.group(1)
@@ -30,7 +30,7 @@ def responder(mensagem):
     mensagem = mensagem.replace("?", "")
     mensagem = mensagem.strip()
 
-    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
+    calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/^])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
 
     if calculo:
         numero1 = calculo.group(1)
@@ -39,7 +39,62 @@ def responder(mensagem):
 
         return calcular(numero1, operador, numero2)
 
-    if mensagem == "sair":
+    # ==========================================================
+    # PERCENTAGEM
+    # ==========================================================
+
+    calculo_percentagem = re.match(
+        r"^(-?\d+(?:\.\d+)?)%\s+de\s+(-?\d+(?:\.\d+)?)$",
+        mensagem
+    )
+
+    if calculo_percentagem:
+
+        percentagem = calculo_percentagem.group(1)
+
+        numero = calculo_percentagem.group(2)
+
+        return calcular_percentagem(
+            percentagem,
+            numero
+        )
+
+    # ==========================================================
+    # RAIZ QUADRADA
+    # ==========================================================
+
+    if mensagem.startswith("raiz de "):
+
+        numero = mensagem.replace(
+            "raiz de ",
+            "",
+            1
+        ).strip()
+
+        return calcular_raiz(numero)
+
+
+    elif mensagem.startswith("raiz quadrada de "):
+
+        numero = mensagem.replace(
+            "raiz quadrada de ",
+            "",
+            1
+        ).strip()
+
+        return calcular_raiz(numero)
+
+    elif mensagem.startswith("√"):
+
+        numero = mensagem.replace(
+            "√",
+            "",
+            1
+        ).strip()
+
+        return calcular_raiz(numero)
+
+    elif mensagem == "adeus":
         return "Até logo!"
 
     elif mensagem in [
@@ -239,39 +294,8 @@ def responder(mensagem):
         return pesquisar_internet(pergunta)
 
     elif mensagem in ["ajuda", "help", "o que podes fazer", "o que você pode fazer"]:
-        return """
-        🤖 Posso ajudar-te com:
-
-        💬 Conversação
-        - olá
-        - como estás?
-        - quem és?
-
-        🧮 Calculadora
-        - 10 + 5
-        - 20 * 4
-        - quanto é 50 dividido por 2?
-
-        🕐 Hora e Data
-        - que horas são?
-        - que dia é hoje?
-
-        🧠 Memória
-        - guardar nome como Danilo
-        - qual é nome
-        - apagar nome
-
-        🌐 Internet
-        - pesquisar Python
-        - pesquisar notícias sobre tecnologia
-        - procura informações sobre Flask
-
-        💾 Conversas
-        - As conversas são guardadas automaticamente.
-
-        💡 Experimenta escrever uma das opções acima!
-        """
-
+        return ajuda()
+    
     else:
         return "Não entendi a pergunta."
 

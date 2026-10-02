@@ -4,7 +4,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import json
-
+import math
 
 # ==========================================================
 # BASE DE DADOS
@@ -393,10 +393,46 @@ def calcular(x, operador, y):
 
         return f"O resultado da divisão é {a / b}."
 
+    elif operador == "^":
+
+        return f"O resultado da potência é {a ** b}."
+
     else:
 
         return "Operador inválido."
 
+def calcular_raiz(numero):
+
+    try:
+
+        numero = float(numero)
+
+    except ValueError:
+
+        return "Número inválido! Por favor, digite apenas números."
+
+    if numero < 0:
+
+        return "Não é possível calcular a raiz quadrada de um número negativo."
+
+    resultado = math.sqrt(numero)
+
+    return f"A raiz quadrada de {numero} é {resultado}."
+
+def calcular_percentagem(percentagem, numero):
+
+    try:
+
+        percentagem = float(percentagem)
+        numero = float(numero)
+
+    except ValueError:
+
+        return "Número inválido! Por favor, digite apenas números."
+
+    resultado = (percentagem / 100) * numero
+
+    return f"{percentagem}% de {numero} é {resultado}."
 
 # ==========================================================
 # PESQUISA NA INTERNET
@@ -491,3 +527,46 @@ def pesquisar_internet(pergunta):
             "Ocorreu um problema ao tentar "
             "pesquisar na Internet."
         )
+
+# ==========================================================
+# AJUDA
+# ==========================================================
+
+def ajuda():
+
+    return """
+🤖 COMANDOS DA ADA
+
+👋 Conversação
+- olá
+- tudo bem
+- qual é o teu nome
+
+🕐 Data e hora
+- que horas são
+- que dia é hoje
+
+🧮 Calculadora
+- 10 + 5
+- 20 - 8
+- 6 * 7
+- 50 / 5
+- 2 ^ 3
+- raiz de 25
+- √25
+- 20% de 500
+
+🌐 Internet
+- pesquisar [assunto]
+
+💾 Memória
+- guardar [informação]
+- lembrar [informação]
+- apagar [informação]
+
+❓ Outros
+- ajuda
+- sair
+
+Digite "ajuda" a qualquer momento para ver esta lista.
+"""

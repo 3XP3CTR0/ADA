@@ -10,6 +10,8 @@ const novaConversa =
 const listaConversas =
     document.getElementById("lista-conversas");
 
+const microfone = document.getElementById("microfone");
+
 
 // ==========================================================
 // BOTÃO DO TEMA
@@ -592,6 +594,7 @@ async function enviarMensagem() {
             dados.resposta,
             "ada"
         );
+        falar(dados.resposta);
 
 
         // Atualizar lista
@@ -709,6 +712,131 @@ input.addEventListener(
 
     }
 );
+
+// ==========================================================
+// VOZ DA ADA - TEXT TO SPEECH
+// ==========================================================
+
+function falar(texto) {
+
+    // Verifica se o navegador suporta voz
+    if (!("speechSynthesis" in window)) {
+
+        console.log(
+            "O navegador não suporta síntese de voz."
+        );
+
+        return;
+    }
+
+    // Para qualquer fala anterior
+    window.speechSynthesis.cancel();
+
+    const fala = new SpeechSynthesisUtterance(texto);
+
+    // Define o idioma
+    fala.lang = "pt-PT";
+
+    // Velocidade da fala
+    fala.rate = 1;
+
+    // Tom da voz
+    fala.pitch = 1;
+
+    // Volume
+    fala.volume = 1;
+
+    window.speechSynthesis.speak(fala);
+}
+
+
+// ==========================================================
+// RECONHECIMENTO DE VOZ COM ENVIO AUTOMÁTICO
+// ==========================================================
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+    const reconhecimento = new SpeechRecognition();
+
+    reconhecimento.lang = "pt-PT";
+    reconhecimento.continuous = false;
+    reconhecimento.interimResults = false;
+
+    let textoReconhecido = "";
+    let ouvindo = false;
+
+    microfone.addEventListener("click", () => {
+
+        if (ouvindo) {
+            return;
+        }
+
+        textoReconhecido = "";
+        ouvindo = true;
+
+        microfone.classList.add("ouvindo");
+        microfone.textContent = "🔴";
+
+        try {
+            reconhecimento.start();
+        } catch (erro) {
+            ouvindo = false;
+            microfone.classList.remove("ouvindo");
+            microfone.textContent = "🎤";
+            console.error("Erro ao iniciar o microfone:", erro);
+        }
+    });
+
+    reconhecimento.onresult = (evento) => {
+
+        textoReconhecido =
+            evento.results[0][0].transcript.trim();
+
+    };
+
+    reconhecimento.onerror = (evento) => {
+
+        console.error("Erro no reconhecimento:", evento.error);
+
+        textoReconhecido = "";
+        ouvindo = false;
+
+        microfone.classList.remove("ouvindo");
+        microfone.textContent = "🎤";
+    };
+
+    reconhecimento.onend = () => {
+
+        ouvindo = false;
+
+        microfone.classList.remove("ouvindo");
+        microfone.textContent = "🎤";
+
+        if (textoReconhecido !== "") {
+
+            input.value = textoReconhecido;
+
+            // Envia a mensagem usando a função
+            // de envio que a ADA já utiliza.
+            botaoEnviar.click();
+        }
+    };
+
+} else {
+
+    microfone.disabled = true;
+    microfone.textContent = "🚫";
+
+    console.log(
+        "O reconhecimento de voz não é suportado neste navegador."
+    );
+}
+
+
 
 
 // ==========================================================

@@ -666,3 +666,38 @@ body {
     }
 
 }
+
+/* ==========================================================
+   MICROFONE
+   ========================================================== */
+
+.microfone {
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--elemento);
+    color: var(--texto);
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.microfone:hover {
+    background: var(--elemento-hover);
+}
+
+.microfone.ouvindo {
+    background: var(--principal);
+    color: white;
+    transform: scale(1.05);
+}

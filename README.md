@@ -1,8 +1,8 @@
 # 🤖 ADA — Assistente Digital Autónoma
 
-A **ADA (Assistente Digital Autónoma)** é um chatbot desenvolvido em **Python**, criado para responder a perguntas simples, realizar cálculos, guardar informações e manter o histórico das conversas.
+A **ADA (Assistente Digital Autónoma)** é um chatbot desenvolvido em **Python**, criado para responder a perguntas simples, realizar cálculos, guardar informações, pesquisar na Internet e manter o histórico das conversas.
 
-O projeto começou como um chatbot simples no terminal e foi evoluindo para uma aplicação web com **Flask**, **SQLite**, interface gráfica e pesquisa na Internet.
+O projeto começou como um chatbot simples no terminal e foi evoluindo para uma aplicação web com **Flask**, **SQLite**, reconhecimento de voz, síntese de voz e uma interface gráfica moderna.
 
 ---
 
@@ -30,11 +30,63 @@ Atualmente, a ADA possui as seguintes funcionalidades:
 * 🔄 Carregar conversas anteriores
 * 🗑️ Apagar conversas
 * 📝 Criar automaticamente títulos para as conversas
+* 🎤 Reconhecimento de voz
+* 🗣️ Transformar voz em texto
+* 🔊 Responder por voz
+* 💬 Enviar automaticamente mensagens reconhecidas por voz
 * 🖥️ Interface web
 * 🌙 Modo escuro
 * ☀️ Modo claro
 * 📱 Interface adaptada para diferentes tamanhos de ecrã
 * 🗄️ Base de dados SQLite para armazenamento das informações
+
+---
+
+## 🎤 Reconhecimento de Voz
+
+A ADA consegue receber mensagens através do microfone.
+
+O funcionamento é:
+
+```text
+🎤 Utilizador fala
+       ↓
+📝 Voz convertida em texto
+       ↓
+⏳ ADA espera o utilizador terminar
+       ↓
+📤 Mensagem enviada automaticamente
+       ↓
+🤖 ADA processa a mensagem
+```
+
+Por exemplo, o utilizador pode dizer:
+
+```text
+Quanto é vinte por cento de quinhentos?
+```
+
+A ADA transforma a fala em texto e envia automaticamente a mensagem depois de o utilizador terminar de falar.
+
+O reconhecimento de voz utiliza as funcionalidades de voz disponíveis no navegador.
+
+---
+
+## 🔊 Resposta por Voz
+
+A ADA também consegue transformar as suas respostas em voz.
+
+O funcionamento é:
+
+```text
+🤖 ADA gera resposta
+       ↓
+💬 Resposta aparece no chat
+       ↓
+🔊 Resposta é lida em voz alta
+```
+
+A velocidade, idioma e voz utilizada dependem das funcionalidades de síntese de voz disponíveis no navegador e no sistema operativo.
 
 ---
 
@@ -66,12 +118,6 @@ quanto é 50 dividido por 5
 2 ^ 3
 ```
 
-Resultado:
-
-```text
-O resultado da potência é 8.0.
-```
-
 ### Raiz quadrada
 
 ```text
@@ -96,17 +142,11 @@ Também é possível utilizar:
 20% de 500
 ```
 
-Resultado:
-
-```text
-20.0% de 500.0 é 100.0.
-```
-
 ---
 
 ## 🌐 Pesquisa na Internet
 
-A ADA também consegue realizar pesquisas na Internet através da API do **DuckDuckGo**.
+A ADA consegue realizar pesquisas na Internet através da API do **DuckDuckGo**.
 
 Exemplo:
 
@@ -144,7 +184,7 @@ Guarda as conversas criadas pelo utilizador.
 
 Guarda as mensagens enviadas pelo utilizador e as respostas da ADA.
 
-Desta forma, as conversas não desaparecem quando a aplicação é fechada.
+Desta forma, as conversas podem continuar disponíveis mesmo depois de a aplicação ser fechada.
 
 ---
 
@@ -161,17 +201,25 @@ A ADA possui um sistema de conversas semelhante ao de aplicações modernas de c
 * apagar conversas;
 * criar automaticamente um título baseado na primeira mensagem.
 
-Exemplo:
+---
+
+## ❓ Sistema de Ajuda
+
+A ADA possui um comando de ajuda que apresenta os principais comandos e funcionalidades disponíveis.
+
+Para consultar a ajuda, basta escrever:
 
 ```text
-Nova conversa
-    ↓
-"Como funciona Python?"
-    ↓
-Título: "Como funciona Python?"
-    ↓
-Histórico guardado na base de dados
+ajuda
 ```
+
+A ADA apresenta exemplos relacionados com:
+
+* conversação;
+* data e hora;
+* calculadora;
+* pesquisa na Internet;
+* outros comandos disponíveis.
 
 ---
 
@@ -184,7 +232,7 @@ A ADA possui uma interface web desenvolvida com:
 * JavaScript
 * Flask
 
-A aplicação possui:
+A interface possui:
 
 * barra lateral;
 * lista de conversas;
@@ -193,6 +241,7 @@ A aplicação possui:
 * mensagens do utilizador;
 * campo de texto;
 * botão de envio;
+* botão de microfone;
 * botão para criar nova conversa;
 * modo claro e modo escuro.
 
@@ -219,13 +268,13 @@ ADA/
 
 ### `app.py`
 
-É responsável pelo funcionamento da aplicação web utilizando Flask.
+Responsável pelo funcionamento da aplicação web utilizando Flask.
 
 Controla as rotas da aplicação e faz a ligação entre a interface, o chatbot e a base de dados.
 
 ### `main.py`
 
-É responsável pela lógica principal da ADA.
+Responsável pela lógica principal da ADA.
 
 Recebe as mensagens do utilizador, identifica o tipo de pedido e chama as funções necessárias.
 
@@ -252,11 +301,11 @@ Define o visual da aplicação, incluindo os modos claro e escuro.
 
 ### `script.js`
 
-Controla a interação da interface com a ADA e comunica com o servidor Flask.
+Controla a interação da interface com a ADA, o envio das mensagens, o reconhecimento de voz e a síntese de voz.
 
 ### `ada.db`
 
-É a base de dados SQLite utilizada para guardar as informações da aplicação.
+Base de dados SQLite utilizada para guardar as informações da aplicação.
 
 ---
 
@@ -268,6 +317,7 @@ Controla a interação da interface com a ADA e comunica com o servidor Flask.
 * **HTML**
 * **CSS**
 * **JavaScript**
+* **Web Speech API**
 * **Git**
 * **GitHub**
 * **VS Code**
@@ -303,7 +353,7 @@ python app.py
 
 ### 5. Abrir no navegador
 
-Depois de executar o programa, abrir no navegador o endereço apresentado pelo Flask, normalmente:
+Depois de executar o programa, abrir no navegador:
 
 ```text
 http://127.0.0.1:5000
@@ -313,9 +363,9 @@ http://127.0.0.1:5000
 
 ## 📌 Objetivo do projeto
 
-O objetivo da ADA é desenvolver progressivamente um assistente digital utilizando conceitos de programação, desenvolvimento web, bases de dados e integração com serviços externos.
+O objetivo da ADA é desenvolver progressivamente um assistente digital utilizando conceitos de programação, desenvolvimento web, bases de dados, APIs e tecnologias de voz.
 
-O projeto também serve como forma de praticar e aplicar conhecimentos de:
+O projeto serve também como forma de praticar e aplicar conhecimentos de:
 
 * Python;
 * programação modular;
@@ -325,6 +375,7 @@ O projeto também serve como forma de praticar e aplicar conhecimentos de:
 * APIs;
 * JavaScript;
 * HTML e CSS;
+* reconhecimento e síntese de voz;
 * Git e GitHub.
 
 ---
@@ -337,8 +388,9 @@ Algumas funcionalidades que podem ser adicionadas futuramente:
 * 📐 Seno, cosseno e tangente
 * 📊 Logaritmos
 * 🧮 Expressões matemáticas mais complexas
-* 🗣️ Reconhecimento de voz
-* 🔊 Respostas por voz
+* 🎙️ Melhorias no reconhecimento de voz
+* 🔊 Controlo para ativar/desativar respostas por voz
+* 🗣️ Seleção de diferentes vozes
 * 📷 Reconhecimento de texto através de imagens (OCR)
 * 📂 Abrir aplicações, ficheiros e pastas
 * 🔎 Pesquisa web mais avançada

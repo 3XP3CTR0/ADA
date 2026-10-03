@@ -114,6 +114,35 @@ carregarTema();
 
 
 // ==========================================================
+// TRANSFORMAR URLs EM LINKS
+// ==========================================================
+
+function transformarLinks(texto) {
+
+    const partes = texto.split(
+        /(https?:\/\/[^\s]+)/g
+    );
+
+    return partes.map(parte => {
+
+        if (parte.match(/^https?:\/\//)) {
+
+            return `
+                <a
+                    href="${parte}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🔗 Abrir link
+                </a>
+            `;
+        }
+
+        return parte;
+    }).join("");
+}
+
+// ==========================================================
 // ADICIONAR MENSAGEM NA INTERFACE
 // ==========================================================
 
@@ -164,7 +193,8 @@ function adicionarMensagem(texto, tipo) {
     );
 
 
-    conteudo.textContent = texto;
+    conteudo.innerHTML =
+    transformarLinks(texto);
 
 
     mensagem.appendChild(avatar);

@@ -1,9 +1,98 @@
 import re
 from funcao import *
 
+# ==========================================================
+# RESPOSTAS DE CONVERSAÇÃO
+# ==========================================================
+
+def resposta_saudacao():
+
+    respostas = [
+        "Olá! 👋 Como posso ajudar?",
+        "Oi! 😊 Em que posso ajudar?",
+        "Olá! É bom falar contigo. 😄",
+        "Hey! 👋 O que vamos fazer hoje?",
+        "Olá! Tudo pronto por aqui. O que precisas?"
+    ]
+
+    # Escolhe uma resposta aleatória
+    import random
+
+    return random.choice(respostas)
+
+
+def resposta_tudo_bem():
+
+    respostas = [
+        "Estou bem! 😊 E contigo?",
+        "Tudo ótimo por aqui! 😄",
+        "Estou muito bem, obrigado por perguntares!",
+        "Tudo tranquilo por aqui. Como posso ajudar?"
+    ]
+
+    import random
+
+    return random.choice(respostas)
+
+
+def resposta_como_estou():
+
+    respostas = [
+        "Estou bem! 😊 Obrigado por perguntares.",
+        "Estou ótima e pronta para ajudar! 🤖",
+        "Tudo bem por aqui! O que precisas?"
+    ]
+
+    import random
+
+    return random.choice(respostas)
+
 def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
+
+    # ==========================================================
+    # PESQUISA NA INTERNET
+    # ==========================================================
+
+    comandos_pesquisa = [
+        "pesquisa ",
+        "pesquisar ",
+        "procura ",
+        "procurar ",
+        "procure "
+    ]
+
+    for comando in comandos_pesquisa:
+
+        if mensagem.startswith(comando):
+
+            pergunta = mensagem[len(comando):].strip()
+
+            # Remove "sobre" ou "informações sobre"
+            if pergunta.startswith("sobre "):
+
+                pergunta = pergunta.replace(
+                    "sobre ",
+                    "",
+                    1
+                ).strip()
+
+            elif pergunta.startswith("informações sobre "):
+
+                pergunta = pergunta.replace(
+                    "informações sobre ",
+                    "",
+                    1
+                ).strip()
+
+            if not pergunta:
+
+                return (
+                    "🔎 O que gostarias que eu pesquisasse?"
+                )
+
+            return pesquisar_internet(pergunta)
 
         # Verificar se a mensagem é uma operação matemática
     calculo = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/^])\s*(-?\d+(?:\.\d+)?)\s*$", mensagem)
@@ -94,35 +183,71 @@ def responder(mensagem):
 
         return calcular_raiz(numero)
 
-    elif mensagem == "adeus":
-        return "Até logo!"
+        # ==========================================================
+    # CONVERSAÇÃO
+    # ==========================================================
 
-    elif mensagem in [
-        "olá",
-        "ola",
-        "oi",
-        "oie",
-        "hey",
-        "hello",
-        "hi",
-        "bom dia",
-        "boa tarde",
-        "boa noite",
-        "e aí",
-        "e ai",
-        "tudo bem",
-        "tudo bom"
-    ]:
-        return "Olá! 👋 Como estás?"
+    # DESPEDIDA
+    elif re.fullmatch(
+        r"(adeus|tchau|até logo|ate logo|até breve|ate breve|xau)[!.]?",
+        mensagem
+    ):
+        return "Até logo! 👋"
 
-    elif mensagem in [
-        "estas bem?",
-        "estás bem?",
-        "tudo bem?",
-        "tudo ótimo?",
-        "tudo otimo?"
-    ]:
-        return "Estou bem, obrigado!"
+
+    # SAUDAÇÕES
+    elif re.fullmatch(
+        r"(oi|olá|ola|oie|hey|hello|hi)[!.]?",
+        mensagem
+    ):
+        return resposta_saudacao()
+
+
+    # SAUDAÇÃO + ADA
+    elif re.fullmatch(
+        r"(oi|olá|ola|oie|hey|hello|hi)\s+ada[!.]?",
+        mensagem
+    ):
+        return resposta_saudacao()
+
+
+    # BOM DIA / BOA TARDE / BOA NOITE
+    elif re.fullmatch(
+        r"(bom dia|boa tarde|boa noite)[!.]?",
+        mensagem
+    ):
+        if mensagem.startswith("bom dia"):
+            return "Bom dia! ☀️ Como posso ajudar?"
+
+        elif mensagem.startswith("boa tarde"):
+            return "Boa tarde! 😊 Em que posso ajudar?"
+
+        else:
+            return "Boa noite! 🌙 Como posso ajudar?"
+
+
+    # E AÍ
+    elif re.fullmatch(
+        r"e\s+a[ií][!.]?",
+        mensagem
+    ):
+        return "E aí! 😄 O que precisas?"
+
+
+    # TUDO BEM / TUDO BOM
+    elif re.fullmatch(
+        r"(tudo bem|tudo bom)[?!.]?",
+        mensagem
+    ):
+        return resposta_tudo_bem()
+
+
+    # COMO ESTÁS
+    elif re.fullmatch(
+        r"(como estás|como estas|estás bem|estas bem|como vai)[?!.]?",
+        mensagem
+    ):
+        return resposta_como_estou()
 
     elif any(palavra in mensagem for palavra in [
         "hora",
@@ -297,5 +422,9 @@ def responder(mensagem):
         return ajuda()
     
     else:
-        return "Não entendi a pergunta."
+        return (
+            "Ainda não sei responder a isso. 🤔\n"
+            "Podes tentar perguntar de outra forma ou escrever "
+            "'ajuda' para veres o que consigo fazer."
+        )
 

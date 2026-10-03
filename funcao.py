@@ -464,6 +464,12 @@ def pesquisar_internet(pergunta):
             resposta.read().decode("utf-8")
         )
 
+        resultados = []
+
+        # ==================================================
+        # RESULTADO PRINCIPAL
+        # ==================================================
+
         resumo = dados.get("AbstractText")
 
         if resumo:
@@ -473,11 +479,20 @@ def pesquisar_internet(pergunta):
                 "DuckDuckGo"
             )
 
-            return (
-                f"Encontrei esta informação:\n\n"
-                f"{resumo}\n\n"
-                f"Fonte: {fonte}"
+            url_fonte = dados.get(
+                "AbstractURL",
+                ""
             )
+
+            resultados.append({
+                "titulo": fonte,
+                "descricao": resumo,
+                "url": url_fonte
+            })
+
+        # ==================================================
+        # RESULTADOS RELACIONADOS
+        # ==================================================
 
         topicos = dados.get(
             "RelatedTopics",
@@ -486,27 +501,74 @@ def pesquisar_internet(pergunta):
 
         for topico in topicos:
 
+            if len(resultados) >= 5:
+                break
+
             if isinstance(topico, dict):
 
                 texto = topico.get("Text")
+                url_topico = topico.get("FirstURL", "")
 
                 if texto:
 
-                    return (
-                        "Encontrei esta informação:\n\n"
-                        f"{texto}\n\n"
-                        "Fonte: DuckDuckGo"
-                    )
+                    resultados.append({
+                        "titulo": "Resultado relacionado",
+                        "descricao": texto,
+                        "url": url_topico
+                    })
 
-        return (
-            "Não encontrei uma resposta adequada "
-            "em português para essa pesquisa."
+        # ==================================================
+        # VERIFICAR RESULTADOS
+        # ==================================================
+
+        if not resultados:
+
+            url_pesquisa = (
+                "https://duckduckgo.com/?q="
+                + pergunta_codificada
+            )
+
+            return (
+                "🔎 Não encontrei uma resposta direta "
+                "para essa pesquisa.\n\n"
+                "Podes consultar os resultados completos "
+                "da pesquisa aqui:\n"
+                f"🔗 {url_pesquisa}"
+            )
+
+        # ==================================================
+        # ORGANIZAR RESPOSTA
+        # ==================================================
+
+        resposta_final = (
+            f"🔎 Encontrei {len(resultados)} "
+            "resultado(s):\n\n"
         )
+
+        for numero, resultado in enumerate(
+            resultados,
+            start=1
+        ):
+
+            resposta_final += (
+                f"{numero}. {resultado['titulo']}\n"
+                f"{resultado['descricao']}\n"
+            )
+
+            if resultado["url"]:
+
+                resposta_final += (
+                    f"🔗 {resultado['url']}\n"
+                )
+
+            resposta_final += "\n"
+
+        return resposta_final
 
     except urllib.error.URLError:
 
         return (
-            "Não consigo pesquisar na Internet "
+            "🌐 Não consigo pesquisar na Internet "
             "porque não existe ligação à Internet "
             "neste momento."
         )
@@ -514,7 +576,7 @@ def pesquisar_internet(pergunta):
     except TimeoutError:
 
         return (
-            "A pesquisa demorou demasiado tempo. "
+            "⏳ A pesquisa demorou demasiado tempo. "
             "Verifica a tua ligação à Internet "
             "e tenta novamente."
         )

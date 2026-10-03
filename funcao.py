@@ -597,38 +597,34 @@ def pesquisar_internet(pergunta):
 def ajuda():
 
     return """
-🤖 COMANDOS DA ADA
+🤖 O QUE POSSO FAZER
 
-👋 Conversação
-- olá
-- tudo bem
-- qual é o teu nome
+👋 Conversar
+- oi / olá
+- bom dia / boa tarde / boa noite
+- tudo bem?
+- como estás?
 
 🕐 Data e hora
 - que horas são
 - que dia é hoje
 
-🧮 Calculadora
+🧮 Calcular
 - 10 + 5
 - 20 - 8
 - 6 * 7
 - 50 / 5
-- 2 ^ 3
 - raiz de 25
-- √25
 - 20% de 500
 
-🌐 Internet
-- pesquisar [assunto]
+🧠 Memória
+- guardar nome como Danilo
+- qual é nome
+- apagar nome
 
-💾 Memória
-- guardar [informação]
-- lembrar [informação]
-- apagar [informação]
+🌐 Pesquisar
+- pesquisar Python
+- pesquisar sobre Cabo Verde
 
-❓ Outros
-- ajuda
-- sair
-
-Digite "ajuda" a qualquer momento para ver esta lista.
+❓ ajuda
 """

@@ -51,6 +51,13 @@ def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
 
+    # Permitir "x" como operador de multiplicação
+    mensagem = re.sub(
+        r"(?<=\d)\s*x\s*(?=-?\d)",
+        "*",
+        mensagem
+    )
+
     # ==========================================================
     # PESQUISA NA INTERNET
     # ==========================================================

@@ -11,6 +11,7 @@ const listaConversas =
     document.getElementById("lista-conversas");
 
 const microfone = document.getElementById("microfone");
+const vozToggle = document.getElementById("voz-toggle");
 
 
 // ==========================================================
@@ -714,10 +715,88 @@ input.addEventListener(
 );
 
 // ==========================================================
+// CONTROLO DA VOZ DA ADA
+// ==========================================================
+
+let vozAtiva = true;
+
+function atualizarBotaoVoz() {
+
+    if (!vozToggle) {
+        return;
+    }
+
+    if (vozAtiva) {
+
+        vozToggle.textContent = "🔊 Voz ligada";
+
+    } else {
+
+        vozToggle.textContent = "🔇 Voz desligada";
+    }
+}
+
+function carregarConfiguracaoVoz() {
+
+    const configuracao =
+        localStorage.getItem("vozADA");
+
+    if (configuracao === "desligada") {
+
+        vozAtiva = false;
+
+    } else {
+
+        vozAtiva = true;
+    }
+
+    atualizarBotaoVoz();
+}
+
+function alternarVoz() {
+
+    vozAtiva = !vozAtiva;
+
+    if (vozAtiva) {
+
+        localStorage.setItem(
+            "vozADA",
+            "ligada"
+        );
+
+    } else {
+
+        localStorage.setItem(
+            "vozADA",
+            "desligada"
+        );
+
+        // Para a ADA imediatamente
+        window.speechSynthesis.cancel();
+    }
+
+    atualizarBotaoVoz();
+}
+
+if (vozToggle) {
+
+    vozToggle.addEventListener(
+        "click",
+        alternarVoz
+    );
+}
+
+carregarConfiguracaoVoz();
+
+// ==========================================================
 // VOZ DA ADA - TEXT TO SPEECH
 // ==========================================================
 
 function falar(texto) {
+
+    if (!vozAtiva) {
+        return;
+    }
 
     // Verifica se o navegador suporta voz
     if (!("speechSynthesis" in window)) {

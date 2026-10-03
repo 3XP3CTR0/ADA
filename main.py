@@ -47,14 +47,66 @@ def resposta_como_estou():
 
     return random.choice(respostas)
 
+def converter_numeros_por_extenso(mensagem):
+
+    numeros = {
+        "zero": "0",
+        "um": "1",
+        "uma": "1",
+        "dois": "2",
+        "duas": "2",
+        "três": "3",
+        "tres": "3",
+        "quatro": "4",
+        "cinco": "5",
+        "seis": "6",
+        "sete": "7",
+        "oito": "8",
+        "nove": "9",
+        "dez": "10",
+        "onze": "11",
+        "doze": "12",
+        "treze": "13",
+        "catorze": "14",
+        "quatorze": "14",
+        "quinze": "15",
+        "dezasseis": "16",
+        "dezesseis": "16",
+        "dezassete": "17",
+        "dezessete": "17",
+        "dezoito": "18",
+        "dezanove": "19",
+        "dezenove": "19",
+        "vinte": "20"
+    }
+
+    for palavra, numero in numeros.items():
+        mensagem = re.sub(
+            rf"\b{palavra}\b",
+            numero,
+            mensagem
+        )
+
+    return mensagem
+
 def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
+
+    # Converter números escritos por extenso
+    mensagem = converter_numeros_por_extenso(mensagem)
 
     # Permitir "x" como operador de multiplicação
     mensagem = re.sub(
         r"(?<=\d)\s*x\s*(?=-?\d)",
         "*",
+        mensagem
+    )
+
+    # Transformar "elevado a" em potência
+    mensagem = re.sub(
+        r"\belevado\s+a\b",
+        "^",
         mensagem
     )
 

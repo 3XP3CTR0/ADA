@@ -47,6 +47,54 @@ def resposta_como_estou():
 
     return random.choice(respostas)
 
+def resposta_agradecimento():
+
+    respostas = [
+        "De nada! 😊",
+        "Não tens de quê! 🤖",
+        "Sempre às ordens! 😄",
+        "Foi um prazer ajudar!",
+        "Claro! Estou aqui para ajudar."
+    ]
+
+    import random
+
+    return random.choice(respostas)
+
+def detetar_intencao(mensagem):
+
+    intencoes = []
+
+    # SAUDAÇÃO
+    if re.search(
+        r"\b(oi|olá|ola|oie|hey|hello|hi|bom dia|boa tarde|boa noite)\b",
+        mensagem
+    ):
+        intencoes.append("saudacao")
+
+    # ESTADO / COMO ESTÁ A ADA
+    if re.search(
+        r"\b(tudo bem|tudo bom|como estás|como estas|estás bem|estas bem|como vai)\b",
+        mensagem
+    ):
+        intencoes.append("estado")
+
+    # AGRADECIMENTO
+    if re.search(
+        r"\b(obrigado|obrigada|agradeço|agradecido|agradecida|valeu)\b",
+        mensagem
+    ):
+        intencoes.append("agradecimento")
+
+    # DESPEDIDA
+    if re.search(
+        r"\b(adeus|tchau|xau|até logo|ate logo|até breve|ate breve)\b",
+        mensagem
+    ):
+        intencoes.append("despedida")
+
+    return intencoes
+
 def converter_numeros_por_extenso(mensagem):
 
     numeros = {
@@ -89,9 +137,30 @@ def converter_numeros_por_extenso(mensagem):
 
     return mensagem
 
+
 def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
+
+    intencoes = detetar_intencao(mensagem)
+
+    if "saudacao" in intencoes and "estado" in intencoes:
+        return "Olá! 😊 Estou bem e pronta para ajudar. E tu, como estás?"
+
+    elif "agradecimento" in intencoes and "despedida" in intencoes:
+        return "De nada! 😊 Até logo!"
+
+    elif "saudacao" in intencoes:
+        return resposta_saudacao()
+
+    elif "estado" in intencoes:
+        return resposta_tudo_bem()
+
+    elif "agradecimento" in intencoes:
+        return resposta_agradecimento()
+
+    elif "despedida" in intencoes:
+        return "Até logo! 😊"
 
     # Converter números escritos por extenso
     mensagem = converter_numeros_por_extenso(mensagem)

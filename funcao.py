@@ -5,6 +5,9 @@ import urllib.parse
 import urllib.error
 import json
 import math
+import os
+import subprocess
+from pathlib import Path
 
 # ==========================================================
 # BASE DE DADOS
@@ -628,3 +631,194 @@ def ajuda():
 
 ❓ ajuda
 """
+
+
+# ==========================================================
+# CONTROLO DO COMPUTADOR
+# ==========================================================
+
+
+def controlar_computador(comando):
+
+    comando = comando.lower().strip()
+
+    # Normalizar acentos
+    comando = (
+        comando.replace("á", "a")
+        .replace("à", "a")
+        .replace("ã", "a")
+        .replace("â", "a")
+        .replace("é", "e")
+        .replace("ê", "e")
+        .replace("í", "i")
+        .replace("ó", "o")
+        .replace("ô", "o")
+        .replace("õ", "o")
+        .replace("ú", "u")
+        .replace("ç", "c")
+    )
+
+
+    # Remover expressões usadas para dar ordens
+    # Repetir até limpar todas as expressões iniciais
+    while True:
+        comando = comando.strip()
+        comando = comando.rstrip(" .,!?")
+
+        expressoes = [
+            "ada, ",
+            "ada ",
+            "por favor, ",
+            "por favor ",
+            "podes ",
+            "pode ",
+            "abre ",
+            "abrir ",
+            "inicia ",
+            "iniciar ",
+            "executa ",
+            "executar ",
+            "a pasta ",
+            "o pasta ",
+            "pasta ",
+            "a ",
+            "o "
+        ]
+
+        removida = False
+
+        for expressao in expressoes:
+            if comando.startswith(expressao):
+                comando = comando[len(expressao):].strip()
+                removida = True
+                break
+
+        if not removida:
+            break
+
+    
+    # ==========================================================
+    # ABRIR PASTAS DO AMBIENTE DE TRABALHO
+    # ==========================================================
+
+    # Procurar o Ambiente de Trabalho do utilizador.
+    # Também verificar a localização habitual do OneDrive.
+    pasta_utilizador = Path.home()
+
+    candidatos = [
+        pasta_utilizador / "Desktop",
+        pasta_utilizador / "OneDrive" / "Desktop"
+    ]
+
+    # Procurar também pastas OneDrive com outros nomes.
+    candidatos.extend(pasta_utilizador.glob("OneDrive*/Desktop"))
+
+    ambiente_trabalho = next(
+        (pasta for pasta in candidatos if pasta.is_dir()),
+        None
+    )
+
+    # Nomes que significam abrir o Ambiente de Trabalho.
+    nomes_ambiente = [
+        "ambiente de trabalho",
+        "desktop",
+        "area de trabalho",
+        "meus projetos",
+        "os meus projetos",
+        "dos meus projetos"
+    ]
+
+    if comando in nomes_ambiente:
+
+        if ambiente_trabalho is None:
+            return (
+                "Não consegui localizar o Ambiente de Trabalho. "
+                "Verifica a localização da pasta no Windows."
+            )
+
+        try:
+            os.startfile(str(ambiente_trabalho))
+            return "Já estou a abrir o Ambiente de Trabalho. 😊"
+
+        except OSError:
+            return "Não consegui abrir o Ambiente de Trabalho."
+
+    # Abrir uma subpasta pelo nome, dentro do Ambiente de Trabalho.
+    if ambiente_trabalho is not None:
+
+        for pasta in ambiente_trabalho.iterdir():
+
+            if (
+                pasta.is_dir()
+                and pasta.name.casefold() == comando.casefold()
+            ):
+                try:
+                    os.startfile(str(pasta))
+                    return f"Já estou a abrir a pasta {pasta.name}. 😊"
+
+                except OSError:
+                    return f"Não consegui abrir a pasta {pasta.name}."
+
+    # Aplicações autorizadas
+    aplicacoes = {
+        "chrome": ["cmd", "/c", "start", "", "chrome"],
+        "google chrome": ["cmd", "/c", "start", "", "chrome"],
+        "edge": ["cmd", "/c", "start", "", "msedge"],
+        "microsoft edge": ["cmd", "/c", "start", "", "msedge"],
+        "vs code": ["cmd", "/c", "start", "", "code"],
+        "visual studio code": ["cmd", "/c", "start", "", "code"],
+        "calculadora": ["calc.exe"],
+        "explorador": ["explorer.exe"],
+        "explorador de ficheiros": ["explorer.exe"],
+        "word": ["cmd", "/c", "start", "", "winword"],
+        "excel": ["cmd", "/c", "start", "", "excel"],
+        "powerpoint": ["cmd", "/c", "start", "", "powerpnt"]
+    }
+
+    if comando in aplicacoes:
+        try:
+            subprocess.Popen(aplicacoes[comando])
+            return f"Claro! Estou a abrir {comando}. 😊"
+
+        except OSError:
+            return (
+                f"Não consegui abrir {comando}. "
+                "Verifica se está instalado no computador."
+            )
+
+    # Abrir ficheiros ou pastas através de um caminho completo
+    if comando.startswith("caminho "):
+
+        caminho_texto = comando[len("caminho "):].strip()
+        caminho = Path(caminho_texto)
+
+        if not caminho.is_absolute():
+            return "Indica o caminho completo do ficheiro ou da pasta."
+
+        if not caminho.exists():
+            return (
+                "Não encontrei esse ficheiro ou pasta. "
+                "Verifica o caminho indicado."
+            )
+
+        extensoes_bloqueadas = {
+            ".exe", ".bat", ".cmd", ".ps1", ".msi", ".com"
+        }
+
+        if caminho.is_file() and caminho.suffix.lower() in extensoes_bloqueadas:
+            return (
+                "Por segurança, não vou executar programas "
+                "ou scripts através deste comando."
+            )
+
+        try:
+            os.startfile(str(caminho))
+            return f"Já estou a abrir: {caminho.name}. 😊"
+
+        except OSError:
+            return (
+                "Não consegui abrir esse caminho. "
+                "Verifica se tens acesso ao ficheiro."
+            )
+
+    return None

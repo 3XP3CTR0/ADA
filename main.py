@@ -142,6 +142,11 @@ def responder(mensagem):
 
     mensagem = mensagem.lower().strip()
 
+    resultado_computador = controlar_computador(mensagem)
+
+    if resultado_computador is not None:
+        return resultado_computador
+
     intencoes = detetar_intencao(mensagem)
 
     if "saudacao" in intencoes and "estado" in intencoes:
